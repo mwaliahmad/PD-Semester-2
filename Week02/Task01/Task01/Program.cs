@@ -4,23 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.IO;
+using Task01.BL;
 
 namespace Task01
 {
     class Program
     {
-        static string[] nameE = new string[100];
-        static string[] ageE = new string[100];
-        static string[] contactE = new string[100];
-        static string[] cnicE = new string[100];
-        static string[] usernameE = new string[100];
-        static string[] passwordE = new string[100];
-        static int indexE = 0;
-        static string path = "D:\\Github\\PD2\\Week01\\Task01\\Task01\\Employee.txt";
-
+        static string path = "D:\\Github\\PD2\\Week02\\Task01\\Task01\\Employee.txt";
         static void Main(string[] args)
         {
-            LoadEmployee();
+            List<Employee> E = new List<Employee>();
+            LoadEmployee(E);
             while (true)
             {
                 Console.Clear();
@@ -31,7 +25,7 @@ namespace Task01
 
                     Console.Clear(); // calling admin interference
                     printHeader();
-                    adminMenu();
+                    adminMenu(E);
                 }
                 else if (user == 3)
                 {
@@ -44,7 +38,7 @@ namespace Task01
 
         }
 
-        static void adminMenu()
+        static void adminMenu(List<Employee> E)
         {
             int choice = 0;
             while (choice != 10)
@@ -65,31 +59,31 @@ namespace Task01
                 {
                     Console.Clear();
                     printHeader();
-                    addEmployee();
+                    addEmployee(E);
                 }
                 if (choice == 2)
                 {
                     Console.Clear();
                     printHeader();
-                    deleteEmployee();
+                    deleteEmployee(E);
                 }
                 if (choice == 3)
                 {
                     Console.Clear();
                     printHeader();
-                   updateEmployee();
+                    updateEmployee(E);
                 }
                 if (choice == 4)
                 {
                     Console.Clear();
                     printHeader();
-                    searchEmployee();
+                    searchEmployee(E);
                 }
                 if (choice == 5)
                 {
                     Console.Clear();
                     printHeader();
-                    viewEmployee();
+                    viewEmployee(E);
                 }
             }
         }
@@ -167,7 +161,7 @@ namespace Task01
             Console.WriteLine("                           |___/                                        |___/                      ");
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void addEmployee()
+        static void addEmployee(List<Employee> E)
         {
             Console.WriteLine();
             string menu = "Admin Menu"; // submenu variables
@@ -177,22 +171,24 @@ namespace Task01
             Console.WriteLine();
             Console.WriteLine("Enter Details of the New Employee:-");
             Console.WriteLine();
-
+            Employee E1 = new Employee();
             Console.Write("Enter Name: ");
-            nameE[indexE] = isAlpha(nameE[indexE]);
+            E1.nameE = isAlpha(E1.nameE);
             Console.Write("Enter Age(+18): ");
-            ageE[indexE] = isNum(ageE[indexE]);
+            E1.ageE = isNum(E1.ageE);
             Console.Write("Enter CNIC(13 numbers): ");
-            cnicE[indexE] = cnicCheck(cnicE[indexE]);
+            E1.cnicE = cnicCheck(E1.cnicE);
             Console.Write("Enter Contact No(11 numbers): ");
-            contactE[indexE] = contactCheck(contactE[indexE]);
+            E1.contactE = contactCheck(E1.contactE);
             Console.Write("Enter Username: ");
-            usernameE[indexE] = usercheck(usernameE[indexE]);
+            E1.usernameE = usercheck(E1.usernameE,E);
             Console.Write("Enter Password: ");
-            passwordE[indexE] = Console.ReadLine();
+            E1.passwordE = Console.ReadLine();
 
-            EmployeeToFile(nameE[indexE], ageE[indexE], cnicE[indexE], contactE[indexE], usernameE[indexE], passwordE[indexE]); // to file
-            indexE++;
+            EmployeeToFile(E1.nameE, E1.ageE ,E1.cnicE,E1.contactE,E1.usernameE,E1.passwordE); // to file
+            E.Add(E1);
+
+            
             Console.WriteLine();
             Console.WriteLine("Employee Added Sucessfully...");
             Thread.Sleep(300);
@@ -200,8 +196,9 @@ namespace Task01
             Console.WriteLine("Press any key for back...");
             Console.ReadKey();
         }
-        static void deleteEmployee()
+        static void deleteEmployee(List<Employee> E)
         {
+
             int index;
             string deleteName;
             Console.WriteLine();
@@ -214,26 +211,18 @@ namespace Task01
             deleteName = Console.ReadLine();
             Console.WriteLine();
             bool notFound = true;
-            for (int idx = 0; idx < 100; idx++)
+            for (int idx = 0; idx < E.Count; idx++)
             {
-                if (deleteName == usernameE[idx])
+                if (deleteName == E[idx].usernameE)
                 {
                     index = idx;
                     Console.WriteLine("Name".PadRight(20) + "Age".PadRight(20) + "CNIC".PadRight(20) + "Contact No.".PadRight(20) + "Username".PadRight(20) + "Password".PadRight(20));
                     Console.WriteLine();
-                    Console.WriteLine(nameE[index].PadRight(20) + ageE[index].PadRight(20) + cnicE[index].PadRight(20) + contactE[index].PadRight(20) + usernameE[index].PadRight(20) + passwordE[index].PadRight(20));
+                    Console.WriteLine(E[idx].nameE.PadRight(20) + E[idx].ageE.PadRight(20) + E[idx].cnicE.PadRight(20) + E[idx].contactE.PadRight(20) + E[idx].usernameE.PadRight(20) + E[idx].passwordE.PadRight(20));
 
-                    for (int j = idx; j <= indexE; j++) // moving arrays one index back
-                    {
-                        nameE[j] = nameE[j + 1];
-                        ageE[j] = ageE[j + 1];
-                        cnicE[j] = cnicE[j + 1];
-                        contactE[j] = contactE[j + 1];
-                        usernameE[j] = usernameE[j + 1];
-                        passwordE[j] = passwordE[j + 1];
-                    }
-                    indexE--;
-                    updateEmployeeFile();
+                    E.RemoveAt(index);
+                    
+                    updateEmployeeFile(E);
                     Console.WriteLine();
                     Console.WriteLine("Employee Removed...");
                     notFound = true;
@@ -260,7 +249,7 @@ namespace Task01
             }
 
         }
-        static void updateEmployee()
+        static void updateEmployee(List<Employee> E)
         {
             int index;
             string updateName;
@@ -274,30 +263,33 @@ namespace Task01
             updateName = Console.ReadLine();
             Console.WriteLine();
             bool notFound = true;
-            for (int idx = 0; idx < 100; idx++)
+            for (int idx = 0; idx < E.Count; idx++)
             {
-                if (updateName == usernameE[idx])
+                if (updateName == E[idx].usernameE)
                 {
                     index = idx;
                     Console.WriteLine("Name".PadRight(20) + "Age".PadRight(20) + "CNIC".PadRight(20) + "Contact No.".PadRight(20) + "Username".PadRight(20) + "Password".PadRight(20));
                     Console.WriteLine();
-                    Console.WriteLine(nameE[index].PadRight(20) + ageE[index].PadRight(20) + cnicE[index].PadRight(20) + contactE[index].PadRight(20) + usernameE[index].PadRight(20) + passwordE[index].PadRight(20));
-                    Console.WriteLine(); // update details
-                  
-                    Console.Write("Enter Name: ");
-                    nameE[index] = isAlpha(nameE[indexE]);
-                    Console.Write("Enter Age(+18): ");
-                    ageE[index] = isNum(ageE[indexE]);
-                    Console.Write("Enter CNIC(13 numbers): ");
-                    cnicE[index] = cnicCheck(cnicE[indexE]);
-                    Console.Write("Enter Contact No(11 numbers): ");
-                    contactE[index] = contactCheck(contactE[indexE]);
-                    Console.Write("Enter Username: ");
-                    usernameE[index] = usercheck(usernameE[indexE]);
-                    Console.Write("Enter Password: ");
-                    passwordE[index] = Console.ReadLine();
+                    Console.WriteLine(E[idx].nameE.PadRight(20) + E[idx].ageE.PadRight(20) + E[idx].cnicE.PadRight(20) + E[idx].contactE.PadRight(20) + E[idx].usernameE.PadRight(20) + E[idx].passwordE.PadRight(20));
 
-                    updateEmployeeFile();
+                    Console.WriteLine(); // update details
+
+                    Employee E1 = new Employee();
+                    Console.Write("Enter Name: ");
+                    E1.nameE = isAlpha(E1.nameE);
+                    Console.Write("Enter Age(+18): ");
+                    E1.ageE = isNum(E1.ageE);
+                    Console.Write("Enter CNIC(13 numbers): ");
+                    E1.cnicE = cnicCheck(E1.cnicE);
+                    Console.Write("Enter Contact No(11 numbers): ");
+                    E1.contactE = contactCheck(E1.contactE);
+                    Console.Write("Enter Username: ");
+                    E1.usernameE = usercheck(E1.usernameE,E);
+                    Console.Write("Enter Password: ");
+                    E1.passwordE = Console.ReadLine();
+
+                    E[idx] = E1;
+                    updateEmployeeFile(E);
                     Console.WriteLine();
                     Console.WriteLine("Employee Updated...");
 
@@ -324,7 +316,7 @@ namespace Task01
                 Console.ReadKey();
             }
         }
-        static void searchEmployee()
+        static void searchEmployee(List<Employee> E)
         {
             int index;
             string searchName;
@@ -342,12 +334,13 @@ namespace Task01
             Console.WriteLine("Name".PadRight(20) + "Age".PadRight(20) + "CNIC".PadRight(20) + "Contact No.".PadRight(20) + "Username".PadRight(20) + "Password".PadRight(20));
             Console.WriteLine();
 
-            for (int idx = 0; idx < 100; idx++)
+            for (int idx = 0; idx < E.Count; idx++)
             {
-                if (searchName == usernameE[idx])
+                if (searchName == E[idx].usernameE)
                 {
                     index = idx;
-                    Console.WriteLine(nameE[index].PadRight(20) + ageE[index].PadRight(20) + cnicE[index].PadRight(20) + contactE[index].PadRight(20) + usernameE[index].PadRight(20) + passwordE[index].PadRight(20));
+                    Console.WriteLine(E[idx].nameE.PadRight(20) + E[idx].ageE.PadRight(20) + E[idx].cnicE.PadRight(20) + E[idx].contactE.PadRight(20) + E[idx].usernameE.PadRight(20) + E[idx].passwordE.PadRight(20));
+
                     notFound = true;
                     one = true;
                 }
@@ -371,7 +364,7 @@ namespace Task01
                 Console.ReadKey();
             }
         }
-        static void viewEmployee()
+        static void viewEmployee(List<Employee> E)
         {
             bool flag = false;
             Console.WriteLine();
@@ -385,11 +378,11 @@ namespace Task01
             Console.WriteLine("Name".PadRight(20) + "Age".PadRight(20) + "CNIC".PadRight(20) + "Contact No.".PadRight(20) + "Username".PadRight(20) + "Password".PadRight(20));
             Console.WriteLine();
             Console.WriteLine(); // display all
-            for (int index = 0; index < indexE; index++)
+            for (int idx = 0; idx < E.Count; idx++)
             {
-                if (nameE[index] != "")
+                if (E[idx].usernameE != "")
                 {
-                    Console.WriteLine(nameE[index].PadRight(20) + ageE[index].PadRight(20) + cnicE[index].PadRight(20) + contactE[index].PadRight(20) + usernameE[index].PadRight(20) + passwordE[index].PadRight(20));
+                    Console.WriteLine(E[idx].nameE.PadRight(20) + E[idx].ageE.PadRight(20) + E[idx].cnicE.PadRight(20) + E[idx].contactE.PadRight(20) + E[idx].usernameE.PadRight(20) + E[idx].passwordE.PadRight(20));
                     flag = true;
                 }
             }
@@ -404,7 +397,7 @@ namespace Task01
             Console.WriteLine("Press any key for back...");
             Console.ReadKey();
         }
-        static void LoadEmployee()
+        static void LoadEmployee(List<Employee> E)
         {
             StreamReader employeeData = new StreamReader(path);
             string line = "";
@@ -412,18 +405,20 @@ namespace Task01
             {
                 if (line != "")
                 {
-                    nameE[indexE] = Dataparse(line, 1);
+                    Employee E1 = new Employee();
 
-                    ageE[indexE] = Dataparse(line, 2);
+                    E1.nameE = Dataparse(line, 1);
 
-                    cnicE[indexE] = Dataparse(line, 3);
+                    E1.ageE = Dataparse(line, 2);
 
-                    contactE[indexE] = Dataparse(line, 4);
+                    E1.cnicE = Dataparse(line, 3);
 
-                    usernameE[indexE] = Dataparse(line, 5);
+                    E1.contactE = Dataparse(line, 4);
 
-                    passwordE[indexE] = Dataparse(line, 6);
-                    indexE++;
+                    E1.usernameE = Dataparse(line, 5);
+
+                    E1.passwordE = Dataparse(line, 6);
+                    E.Add(E1);
                 }
             }
             employeeData.Close();
@@ -436,14 +431,14 @@ namespace Task01
             employeeData.Close();
         }
 
-        static void updateEmployeeFile()
+        static void updateEmployeeFile(List<Employee> E)
         {
             StreamWriter employeeData = new StreamWriter(path);
-            for (int i = 0; i < indexE; i++)
+            for (int i = 0; i < E.Count; i++)
             {
-                if (nameE[i] != "")
+                if (E[i].nameE != "")
                 {
-                    employeeData.WriteLine(nameE[i] + "," + ageE[i] + "," + cnicE[i] + "," + contactE[i] + "," + usernameE[i] + "," + passwordE[i]);
+                    employeeData.WriteLine(E[i].nameE + "," + E[i].ageE + "," + E[i].cnicE + "," + E[i].contactE + "," + E[i].usernameE + "," + E[i].passwordE);
                 }
             }
             employeeData.Flush();
@@ -654,12 +649,12 @@ namespace Task01
                 }
             }
         }
-        static string usercheck(string username) // username validation
+        static string usercheck(string username, List<Employee> E) // username validation
         {
             username = Console.ReadLine();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < E.Count; i++)
             {
-                if (username == usernameE[i] && username != "admin")
+                if (username == E[i].usernameE && username != "admin")
                 {
                     Console.WriteLine("Username Already Present");
                     Console.Write("Enter Again: ");
