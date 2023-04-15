@@ -18,3 +18,13 @@ D:\GitHub\PD2\Week01\Task02\Task02\obj\Debug\Task02.csproj.CoreCompileInputs.cac
 D:\GitHub\PD2\Week01\Task02\Task02\obj\Debug\Task02.csproj.CopyComplete
 D:\GitHub\PD2\Week01\Task02\Task02\obj\Debug\Task02.exe
 D:\GitHub\PD2\Week01\Task02\Task02\obj\Debug\Task02.pdb
+D:\GitHub\PD2\Week02\Task02\Task02\bin\Debug\Task02.exe.config
+D:\GitHub\PD2\Week02\Task02\Task02\bin\Debug\Task02.exe
+D:\GitHub\PD2\Week02\Task02\Task02\bin\Debug\Task02.pdb
+D:\GitHub\PD2\Week02\Task02\Task02\bin\Debug\EZInput.dll
+D:\GitHub\PD2\Week02\Task02\Task02\bin\Debug\EZInput.xml
+D:\GitHub\PD2\Week02\Task02\Task02\obj\Debug\Task02.csproj.AssemblyReference.cache
+D:\GitHub\PD2\Week02\Task02\Task02\obj\Debug\Task02.csproj.CoreCompileInputs.cache
+D:\GitHub\PD2\Week02\Task02\Task02\obj\Debug\Task02.csproj.CopyComplete
+D:\GitHub\PD2\Week02\Task02\Task02\obj\Debug\Task02.exe
+D:\GitHub\PD2\Week02\Task02\Task02\obj\Debug\Task02.pdb

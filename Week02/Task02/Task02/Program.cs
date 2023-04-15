@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading;
 using System.IO;
 using EZInput;
+using Task02.BL;
 
 namespace Task02
 {
     class Program
     {
+        static int score = 0; // score
         static void Main(string[] args)
         {
             char[,] Maze = new char[26, 70]; // All Arrays
@@ -21,47 +23,43 @@ namespace Task02
             LoadBuddyLeft(BuddyLeft);
             LoadEnemy(Enemy);
 
-
-            int BuddyX = 3;
-            int BuddyY = 22;
-            int Buddyhealth = 100;
-            string printDirection = "right";
-            bool isJump = false;
-            int jumpTick = 0;
+            FBuddy CBuddy = new FBuddy();
+            CBuddy.X = 3;
+            CBuddy.Y = 22;
+            CBuddy.health = 100;
+            CBuddy.printDirection = "right";
+            CBuddy.isJump = false;
+            CBuddy.jumpTick = 0;
 
             int[] bulletX = new int[100];
             int[] bulletY = new int[100];
             char[] bulletDirection = new char[100];
             int bulletCount = 0;
 
-            int enemy1X = 62; // enemy1 coordinates and health
-            int enemy1Y = 22;
-            string enemy1direction = "down";
-            int Enemy1health = 50;
+            Enemy1 CEnemy1 = new Enemy1();
+            CEnemy1.X = 62; // enemy1 coordinates and health
+            CEnemy1.Y = 22;
+            CEnemy1.direction = "down";
+            CEnemy1.health = 50;
 
-            int score = 0; // score
-
-            int check = 0; // flags for game
             bool game = true;
-            int count = 0;
-            int tick = 0;
 
             Console.Clear();
             PrintMaze(Maze);
-            PrintEnemy1(Enemy, ref enemy1X, ref enemy1Y);
-            printBuddy(Buddy, ref BuddyX, ref BuddyY);
+            PrintEnemy1(Enemy, CEnemy1);
+            printBuddy(Buddy, CBuddy);
 
             while (game)
             {
-                printScore(ref score);
-                printBuddyHealth(ref Buddyhealth);
-                moveEnemy(Maze, Enemy, ref enemy1X, ref enemy1Y, ref Enemy1health, ref enemy1direction);
-                gameover(ref Buddyhealth, ref game);
-                gameoverCollsion(ref BuddyX, ref BuddyY, ref Buddyhealth, ref enemy1X, ref enemy1Y, ref Enemy1health);
-                Printenemyhealth(ref game, ref Enemy1health);
-                controlBuddy(Maze, Buddy, BuddyLeft, ref BuddyX, ref BuddyY, ref printDirection, ref isJump, ref jumpTick, bulletX, bulletY, bulletDirection, ref bulletCount, ref check, ref game, ref score, ref Enemy1health, ref Buddyhealth);
+                printScore();
+                printBuddyHealth(CBuddy);
+                moveEnemy(Maze, Enemy, CEnemy1);
+                gameover(CBuddy, ref game);
+                gameoverCollsion(CBuddy, CEnemy1);
+                Printenemyhealth(ref game, CEnemy1);
+                controlBuddy(Maze, Buddy, BuddyLeft, CBuddy, bulletX, bulletY, bulletDirection, ref bulletCount, ref game,CEnemy1);
                 movebullet(Maze, bulletX, bulletY, bulletDirection, ref bulletCount);
-                collision(ref Buddyhealth, ref enemy1X, ref enemy1Y, bulletX, bulletY, bulletDirection, ref bulletCount, ref Enemy1health, ref score);
+                collision(CEnemy1, bulletX, bulletY, bulletDirection, ref bulletCount, ref score);
                 Thread.Sleep(50);
             }
 
@@ -81,170 +79,170 @@ namespace Task02
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void moveBuddyDown(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, ref int BuddyX, ref int BuddyY, ref string printDirection, ref int score)
+        static void moveBuddyDown(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, FBuddy CBuddy)
         {
-            char next = Maze[BuddyY + 3, BuddyX];
-            char next1 = Maze[BuddyY + 3, BuddyX + 1];
-            char next2 = Maze[BuddyY + 3, BuddyX + 2];
-            char next3 = Maze[BuddyY + 3, BuddyX + 3];
+            char next = Maze[CBuddy.Y + 3, CBuddy.X];
+            char next1 = Maze[CBuddy.Y + 3, CBuddy.X + 1];
+            char next2 = Maze[CBuddy.Y + 3, CBuddy.X + 2];
+            char next3 = Maze[CBuddy.Y + 3, CBuddy.X + 3];
             if (next == ' ' && next1 == ' ' && next2 == ' ' && next3 == ' ')
             {
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyY++;
-                if (printDirection == "right")
+                eraseBuddy(CBuddy);
+                CBuddy.Y++;
+                if (CBuddy.printDirection == "right")
                 {
-                    printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                    printBuddy(Buddy, CBuddy);
                 }
                 else
                 {
-                    printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                    printBuddyLeft(BuddyLeft, CBuddy);
                 }
             }
 
             else if (next == '$' || next1 == '$' || next2 == '$' || next3 == '$')
             {
                 score = score + 10;
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyY++;
-                if (printDirection == "right")
+                eraseBuddy(CBuddy);
+                CBuddy.Y++;
+                if (CBuddy.printDirection == "right")
                 {
-                    printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                    printBuddy(Buddy, CBuddy);
                 }
                 else
                 {
-                    printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                    printBuddyLeft(BuddyLeft, CBuddy);
                 }
             }
         }
 
-        static void moveBuddyUp(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, ref int BuddyX, ref int BuddyY, ref string printDirection, ref int score, ref int Buddyhealth)
+        static void moveBuddyUp(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, FBuddy CBuddy)
         {
-            char next = Maze[BuddyY - 1, BuddyX];
-            char next1 = Maze[BuddyY - 1, BuddyX + 1];
-            char next2 = Maze[BuddyY - 1, BuddyX + 2];
-            char next3 = Maze[BuddyY - 1, BuddyX + 3];
+            char next = Maze[CBuddy.Y - 1, CBuddy.X];
+            char next1 = Maze[CBuddy.Y - 1, CBuddy.X + 1];
+            char next2 = Maze[CBuddy.Y - 1, CBuddy.X + 2];
+            char next3 = Maze[CBuddy.Y - 1, CBuddy.X + 3];
             if (next == ' ' && next1 == ' ' && next2 == ' ' && next3 == ' ')
             {
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyY--;
-                if (printDirection == "right")
+                eraseBuddy(CBuddy);
+                CBuddy.Y--;
+                if (CBuddy.printDirection == "right")
                 {
-                    printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                    printBuddy(Buddy, CBuddy);
                 }
                 else
                 {
-                    printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                    printBuddyLeft(BuddyLeft, CBuddy);
                 }
             }
 
             if (next == '$' || next1 == '$' || next2 == '$' || next3 == '$')
             {
                 score = score + 10;
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyY--;
-                if (printDirection == "right")
+                eraseBuddy(CBuddy);
+                CBuddy.Y--;
+                if (CBuddy.printDirection == "right")
                 {
-                    printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                    printBuddy(Buddy, CBuddy);
                 }
                 else
                 {
-                    printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                    printBuddyLeft(BuddyLeft, CBuddy);
                 }
             }
 
         }
 
-        static void moveBuddyLeft(char[,] Maze, char[,] BuddyLeft, ref int BuddyX, ref int BuddyY, ref string printDirection, ref int check, ref bool game, ref int score)
+        static void moveBuddyLeft(char[,] Maze, char[,] BuddyLeft, FBuddy CBuddy,  ref bool game)
         {
-            printDirection = "left";
-            char next = Maze[BuddyY, BuddyX - 1];
-            char next1 = Maze[BuddyY + 1, BuddyX - 1];
-            char next2 = Maze[BuddyY + 2, BuddyX - 1];
+            CBuddy.printDirection = "left";
+            char next = Maze[CBuddy.Y, CBuddy.X - 1];
+            char next1 = Maze[CBuddy.Y + 1, CBuddy.X - 1];
+            char next2 = Maze[CBuddy.Y + 2, CBuddy.X - 1];
             if (next == ' ' && next1 == ' ' && next2 == ' ')
             {
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyX--;
-                printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                eraseBuddy(CBuddy);
+                CBuddy.X--;
+                printBuddyLeft(BuddyLeft, CBuddy);
             }
             if (next == '$' || next1 == '$' || next2 == '$')
             {
                 score = score + 10;
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyX--;
-                printBuddyLeft(BuddyLeft, ref BuddyX, ref BuddyY);
+                eraseBuddy(CBuddy);
+                CBuddy.X--;
+                printBuddyLeft(BuddyLeft, CBuddy);
             }
         }
 
-        static void moveBuddyRight(char[,] Maze, char[,] Buddy, ref int BuddyX, ref int BuddyY, ref string printDirection, ref int check, ref bool game, ref int score, ref int Enemy1health)
+        static void moveBuddyRight(char[,] Maze, char[,] Buddy, FBuddy CBuddy,  ref bool game,Enemy1 CEnemy1)
         {
-            printDirection = "right";
-            char next = Maze[BuddyY, BuddyX + 4];
-            char next1 = Maze[BuddyY + 1, BuddyX + 4];
-            char next2 = Maze[BuddyY + 2, BuddyX + 4];
+            CBuddy.printDirection = "right";
+            char next = Maze[CBuddy.Y, CBuddy.X + 4];
+            char next1 = Maze[CBuddy.Y + 1, CBuddy.X + 4];
+            char next2 = Maze[CBuddy.Y + 2, CBuddy.X + 4];
             if (next == ' ' && next1 == ' ' && next2 == ' ')
             {
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyX++;
-                printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                eraseBuddy(CBuddy);
+                CBuddy.X++;
+                printBuddy(Buddy, CBuddy);
             }
             if (next == '$' || next1 == '$' || next2 == '$')
             {
                 score = score + 10;
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                BuddyX++;
-                printBuddy(Buddy, ref BuddyX, ref BuddyY);
+                eraseBuddy(CBuddy);
+                CBuddy.X++;
+                printBuddy(Buddy, CBuddy);
             }
 
-            if ((next == '|' || next1 == '|' || next2 == '|') && Enemy1health == -1)
+            if ((next == '|' || next1 == '|' || next2 == '|') && CEnemy1.health == -1)
             {
-                eraseBuddy(ref BuddyX, ref BuddyY);
-                complete(ref check, ref game);
+                eraseBuddy(CBuddy);
+                complete(ref game);
             }
         }
 
-        static void controlBuddy(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, ref int BuddyX, ref int BuddyY, ref string printDirection, ref bool isJump, ref int jumpTick, int[] bulletX, int[] bulletY, char[] bulletDirection, ref int bulletCount, ref int check, ref bool game, ref int score, ref int Enemy1health, ref int Buddyhealth)
+        static void controlBuddy(char[,] Maze, char[,] Buddy, char[,] BuddyLeft, FBuddy CBuddy, int[] bulletX, int[] bulletY, char[] bulletDirection, ref int bulletCount, ref bool game,Enemy1 CEnemy1)
         {
             if (Keyboard.IsKeyPressed(Key.LeftArrow))
             {
-                moveBuddyLeft(Maze, BuddyLeft, ref BuddyX, ref BuddyY, ref printDirection, ref check, ref game, ref score);
+                moveBuddyLeft(Maze, BuddyLeft, CBuddy,  ref game);
             }
 
             if (Keyboard.IsKeyPressed(Key.RightArrow))
             {
-                moveBuddyRight(Maze, Buddy, ref BuddyX, ref BuddyY, ref printDirection, ref check, ref game, ref score, ref Enemy1health);
+                moveBuddyRight(Maze, Buddy, CBuddy, ref game, CEnemy1);
             }
             if (Keyboard.IsKeyPressed(Key.UpArrow))
             {
-                if (canJump(Maze, ref BuddyX, ref BuddyY))
+                if (canJump(Maze, CBuddy))
                 {
-                    isJump = true;
+                    CBuddy.isJump = true;
                 }
             }
-            if (isJump)
+            if (CBuddy.isJump)
             {
-                moveBuddyUp(Maze, Buddy, BuddyLeft, ref BuddyX, ref BuddyY, ref printDirection, ref score, ref Buddyhealth);
-                jumpTick += 1;
-                if (jumpTick == 4)
+                moveBuddyUp(Maze, Buddy, BuddyLeft, CBuddy);
+                CBuddy.jumpTick += 1;
+                if (CBuddy.jumpTick == 4)
                 {
-                    isJump = false;
-                    jumpTick = 0;
+                    CBuddy.isJump = false;
+                    CBuddy.jumpTick = 0;
                 }
             }
             else
             {
-                moveBuddyDown(Maze, Buddy, BuddyLeft, ref BuddyX, ref BuddyY, ref printDirection, ref score);
+                moveBuddyDown(Maze, Buddy, BuddyLeft, CBuddy);
             }
             if (Keyboard.IsKeyPressed(Key.Space))
             {
-                createBullet(Maze, ref BuddyX, ref BuddyY, ref printDirection, bulletX, bulletY, bulletDirection, ref bulletCount);
+                createBullet(Maze, CBuddy, bulletX, bulletY, bulletDirection, ref bulletCount);
             }
         }
-        static bool canJump(char[,] Maze, ref int BuddyX, ref int BuddyY)
+        static bool canJump(char[,] Maze, FBuddy CBuddy)
         {
-            char below1 = Maze[BuddyY + 3, BuddyX];
-            char below2 = Maze[BuddyY + 3, BuddyX + 1];
-            char below3 = Maze[BuddyY + 3, BuddyX + 2];
-            char below4 = Maze[BuddyY + 3, BuddyX + 3];
+            char below1 = Maze[CBuddy.Y + 3, CBuddy.X];
+            char below2 = Maze[CBuddy.Y + 3, CBuddy.X + 1];
+            char below3 = Maze[CBuddy.Y + 3, CBuddy.X + 2];
+            char below4 = Maze[CBuddy.Y + 3, CBuddy.X + 3];
             if ((below1 == '#' || below2 == '#' || below3 == '#' || below4 == '#'))
             {
                 return true;
@@ -254,11 +252,11 @@ namespace Task02
                 return false;
             }
         }
-        static void printBuddy(char[,] Buddy, ref int BuddyX, ref int BuddyY)
+        static void printBuddy(char[,] Buddy, FBuddy CBuddy)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            int PrintBX = BuddyX;
-            int PrintBY = BuddyY;
+            int PrintBX = CBuddy.X;
+            int PrintBY = CBuddy.Y;
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(PrintBX, PrintBY);
@@ -271,11 +269,11 @@ namespace Task02
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void eraseBuddy(ref int BuddyX, ref int BuddyY)
+        static void eraseBuddy(FBuddy CBuddy)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            int PrintBX = BuddyX;
-            int PrintBY = BuddyY;
+            int PrintBX = CBuddy.X;
+            int PrintBY = CBuddy.Y;
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(PrintBX, PrintBY);
@@ -288,11 +286,11 @@ namespace Task02
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void printBuddyLeft(char[,] BuddyLeft, ref int BuddyX, ref int BuddyY)
+        static void printBuddyLeft(char[,] BuddyLeft, FBuddy CBuddy)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            int PrintBX = BuddyX;
-            int PrintBY = BuddyY;
+            int PrintBX = CBuddy.X;
+            int PrintBY = CBuddy.Y;
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(PrintBX, PrintBY);
@@ -306,11 +304,11 @@ namespace Task02
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        static void PrintEnemy1(char[,] Enemy, ref int enemy1X, ref int enemy1Y)
+        static void PrintEnemy1(char[,] Enemy,Enemy1 CEnemy1)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            int EnemyP1X = enemy1X;
-            int EnemyP1Y = enemy1Y;
+            int EnemyP1X = CEnemy1.X;
+            int EnemyP1Y = CEnemy1.Y;
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(EnemyP1X, EnemyP1Y);
@@ -323,11 +321,11 @@ namespace Task02
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void EraseEnemy1(ref int enemy1X, ref int enemy1Y)
+        static void EraseEnemy1(Enemy1 CEnemy1)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            int EnemyP1X = enemy1X;
-            int EnemyP1Y = enemy1Y;
+            int EnemyP1X = CEnemy1.X;
+            int EnemyP1Y = CEnemy1.Y;
             for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(EnemyP1X, EnemyP1Y);
@@ -340,18 +338,18 @@ namespace Task02
             }
             Console.ForegroundColor = ConsoleColor.White;
         }
-        static void createBullet(char[,] Maze, ref int BuddyX, ref int BuddyY, ref string printDirection, int[] bulletX, int[] bulletY, char[] bulletDirection, ref int bulletCount)
+        static void createBullet(char[,] Maze,FBuddy CBuddy, int[] bulletX, int[] bulletY, char[] bulletDirection, ref int bulletCount)
         {
-            if (printDirection == "right")
+            if (CBuddy.printDirection == "right")
             {
                 Console.Beep();
-                char next = Maze[BuddyY + 1, BuddyX + 4];
+                char next = Maze[CBuddy.Y + 1, CBuddy.X + 4];
                 if (next == ' ')
                 {
-                    bulletX[bulletCount] = BuddyX + 4;
-                    bulletY[bulletCount] = BuddyY + 1;
+                    bulletX[bulletCount] = CBuddy.X + 4;
+                    bulletY[bulletCount] = CBuddy.Y + 1;
                     bulletDirection[bulletCount] = 'R';
-                    Console.SetCursorPosition(BuddyX + 4, BuddyY + 1);
+                    Console.SetCursorPosition(CBuddy.X + 4,CBuddy.Y + 1);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("*");
                     bulletCount++;
@@ -359,16 +357,16 @@ namespace Task02
                 }
             }
 
-            if (printDirection == "left")
+            if (CBuddy.printDirection == "left")
             {
                 Console.Beep();
-                char next = Maze[BuddyY + 1, BuddyX - 1];
+                char next = Maze[CBuddy.Y + 1, CBuddy.X - 1];
                 if (next == ' ')
                 {
-                    bulletX[bulletCount] = BuddyX - 1;
-                    bulletY[bulletCount] = BuddyY + 1;
+                    bulletX[bulletCount] = CBuddy.X - 1;
+                    bulletY[bulletCount] = CBuddy.Y + 1;
                     bulletDirection[bulletCount] = 'L';
-                    Console.SetCursorPosition(BuddyX - 1, BuddyY + 1);
+                    Console.SetCursorPosition(CBuddy.X - 1, CBuddy.Y + 1);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("*");
                     bulletCount++;
@@ -440,52 +438,52 @@ namespace Task02
             Console.SetCursorPosition(x, y);
             Console.WriteLine(" ");
         }
-        static void moveEnemy(char[,] Maze, char[,] Enemy, ref int enemy1X, ref int enemy1Y, ref int Enemy1health, ref string enemy1direction)
+        static void moveEnemy(char[,] Maze, char[,] Enemy,Enemy1 CEnemy1)
         {
-            if (Enemy1health > 0)
+            if (CEnemy1.health > 0)
             {
-                if (enemy1direction == "up")
+                if (CEnemy1.direction == "up")
                 {
-                    char next = Maze[enemy1Y - 1, enemy1X];
+                    char next = Maze[CEnemy1.Y - 1, CEnemy1.X];
                     if (next == ' ')
                     {
-                        EraseEnemy1(ref enemy1X, ref enemy1Y);
-                        enemy1Y--;
-                        PrintEnemy1(Enemy, ref enemy1X, ref enemy1Y);
+                        EraseEnemy1(CEnemy1);
+                        CEnemy1.Y--;
+                        PrintEnemy1(Enemy, CEnemy1);
                     }
                     if (next == '#')
                     {
-                        enemy1direction = "down";
+                        CEnemy1.direction = "down";
                     }
                 }
-                if (enemy1direction == "down")
+                if (CEnemy1.direction == "down")
                 {
-                    char next = Maze[enemy1Y + 3, enemy1X];
+                    char next = Maze[CEnemy1.Y + 3, CEnemy1.X];
                     if (next == ' ')
                     {
-                        EraseEnemy1(ref enemy1X, ref enemy1Y);
-                        enemy1Y++;
-                        PrintEnemy1(Enemy, ref enemy1X, ref enemy1Y);
+                        EraseEnemy1(CEnemy1);
+                        CEnemy1.Y++;
+                        PrintEnemy1(Enemy, CEnemy1);
                     }
                     if (next == '#')
                     {
-                        enemy1direction = "up";
+                        CEnemy1.direction = "up";
                     }
                 }
             }
-            if (Enemy1health == 0)
+            if (CEnemy1.health == 0)
             {
-                EraseEnemy1(ref enemy1X, ref enemy1Y);
-                Enemy1health = -1;
-                enemy1X = 0;
-                enemy1Y = 0;
+                EraseEnemy1(CEnemy1);
+                CEnemy1.health = -1;
+                CEnemy1.X = 0;
+                CEnemy1.Y = 0;
                 Console.SetCursorPosition(75, 12);
                 Console.WriteLine("Botchan Health: KILL ");
             }
         }
-        static void gameover(ref int Buddyhealth, ref bool game)
+        static void gameover(FBuddy CBuddy, ref bool game)
         {
-            if (Buddyhealth == 0)
+            if (CBuddy.health == 0)
             {
                 game = false;
                 Console.Clear();
@@ -496,9 +494,10 @@ namespace Task02
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.White;
+                Thread.Sleep(300);
             }
         }
-        static void complete(ref int check, ref bool game)
+        static void complete(ref bool game)
         {
             game = false;
             // game2 = false;
@@ -510,71 +509,74 @@ namespace Task02
             Console.WriteLine();
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(300);
         }
-        static void gameoverCollsion(ref int BuddyX, ref int BuddyY, ref int Buddyhealth, ref int enemy1X, ref int enemy1Y, ref int Enemy1health)
+        static void gameoverCollsion(FBuddy CBuddy, Enemy1 CEnemy1)
         {
             // enemy1
-            if (Enemy1health > 0)
+
+            if (CEnemy1.health > 0)
             {
                 for (int i = -2; i < 3; i++) // right
                 {
-                    if (BuddyX + 3 == enemy1X - 1 && BuddyY == enemy1Y + i)
+                    if (CBuddy.X + 3 == CEnemy1.X - 1 && CBuddy.Y == CEnemy1.Y + i)
                     {
-                        Buddyhealth = 0;
+                        CBuddy.health = 0;
                     }
                 }
 
-                if (BuddyX + 3 == enemy1X - 1 && BuddyY == enemy1Y) // right
+                if (CBuddy.X + 3 == CEnemy1.X - 1 && CBuddy.Y == CEnemy1.Y) // right
                 {
-                    Buddyhealth = 0;
+                    CBuddy.health = 0;
                 }
 
                 for (int i = -3; i < 8; i++) // enemy up
                 {
-                    if (BuddyX == enemy1X + i && BuddyY - 1 == enemy1Y + 2)
+                    if (CBuddy.X == CEnemy1.X + i && CBuddy.Y - 1 == CEnemy1.Y + 2)
                     {
-                        Buddyhealth = 0;
+                        CBuddy.health = 0;
                     }
                 }
 
                 for (int i = -3; i < 8; i++) // Enemy down
                 {
-                    if (BuddyX == enemy1X + i && BuddyY + 2 == enemy1Y - 1)
+                    if (CBuddy.X == CEnemy1.X + i && CBuddy.Y + 2 == CEnemy1.Y - 1)
                     {
-                        Buddyhealth = 0;
+                        CBuddy.health = 0;
                     }
                 }
             }
         }
-        static void printBuddyHealth(ref int Buddyhealth)
+        static void printBuddyHealth(FBuddy CBuddy)
         {
+
             Console.SetCursorPosition(75, 10);
             Console.WriteLine("Your Health:    ");
             Console.SetCursorPosition(75, 10);
-            Console.WriteLine("Your Health: " + Buddyhealth);
+            Console.WriteLine("Your Health: " + CBuddy.health);
         }
-        static void Printenemyhealth(ref bool game, ref int Enemy1health)
+        static void Printenemyhealth(ref bool game, Enemy1 CEnemy1)
         {
-            if (Enemy1health > 0 && game == true)
+            if (CEnemy1.health > 0 && game == true)
             {
                 Console.SetCursorPosition(75, 12);
                 Console.WriteLine("Botchan Health:   ");
                 Console.SetCursorPosition(75, 12);
-                Console.WriteLine("Botchan Health: " + Enemy1health);
+                Console.WriteLine("Botchan Health: " + CEnemy1.health);
             }
         }
-        static void printScore(ref int score)
+        static void printScore()
         {
             Console.SetCursorPosition(75, 8);
             Console.WriteLine("Score: " + score);
         }
-        static void addScore(ref int score)
+        static void addScore()
         {
             score++;
         }
         static void LoadMaze(char[,] Maze)
         {
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week01\\Task02\\Task02\\Maze.txt");
+            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\Maze.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -593,7 +595,7 @@ namespace Task02
             char fireBuddyHead = Convert.ToChar(234);
             char fireBuddyBody = Convert.ToChar(178);
             char fireBuddyHand = Convert.ToChar(155);
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week01\\Task02\\Task02\\BuddyRight.txt");
+            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\BuddyRight.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -628,7 +630,7 @@ namespace Task02
             char fireBuddyHead = Convert.ToChar(234);
             char fireBuddyBody = Convert.ToChar(178);
             char fireBuddyHand = Convert.ToChar(155);
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week01\\Task02\\Task02\\BuddyLeft.txt");
+            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\BuddyLeft.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -660,7 +662,7 @@ namespace Task02
         }
         static void LoadEnemy(char[,] Enemy)
         {
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week01\\Task02\\Task02\\Enemy.txt");
+            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\Enemy.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -673,18 +675,18 @@ namespace Task02
             }
             fp.Close();
         }
-        static void collision(ref int Buddyhealth,ref int enemy1X,ref int enemy1Y, int[] bulletX, int[] bulletY, char[] bulletDirection,ref int bulletCount,ref int Enemy1health,ref int score)
+        static void collision(Enemy1 CEnemy1, int[] bulletX, int[] bulletY, char[] bulletDirection, ref int bulletCount, ref int score)
         {
             for (int x = 0; x < bulletCount; x++)
             {
-                if (Enemy1health > 0)
+                if (CEnemy1.health > 0)
                 {
-                    if (bulletX[x] + 1 == enemy1X && (bulletY[x] == enemy1Y || bulletY[x] == enemy1Y + 1 || bulletY[x] == enemy1Y + 2))
+                    if (bulletX[x] + 1 == CEnemy1.X && (bulletY[x] == CEnemy1.Y || bulletY[x] == CEnemy1.Y + 1 || bulletY[x] == CEnemy1.Y + 2))
                     {
                         eraseBullet(bulletX[x], bulletY[x]);
-                        Enemy1health = Enemy1health - 5;
-                        addScore(ref score);
-                        deleteBullet(x, bulletX, bulletY, bulletDirection,ref bulletCount);
+                        CEnemy1.health = CEnemy1.health - 5;
+                        addScore();
+                        deleteBullet(x, bulletX, bulletY, bulletDirection, ref bulletCount);
                     }
                 }
             }
