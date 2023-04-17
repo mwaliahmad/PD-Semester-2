@@ -10,7 +10,7 @@ namespace Task01
 {
     class Program
     {
-        static string path = "D:\\Github\\PD2\\Week02\\Task01\\Task01\\Employee.txt";
+        static string path = "Employee.txt";
         static void Main(string[] args)
         {
             List<Employee> E = new List<Employee>();

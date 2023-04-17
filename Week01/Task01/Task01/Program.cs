@@ -16,7 +16,7 @@ namespace Task01
         static string[] usernameE = new string[100];
         static string[] passwordE = new string[100];
         static int indexE = 0;
-        static string path = "D:\\Github\\PD2\\Week01\\Task01\\Task01\\Employee.txt";
+        static string path = "Employee.txt";
 
         static void Main(string[] args)
         {

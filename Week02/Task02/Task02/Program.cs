@@ -576,7 +576,7 @@ namespace Task02
         }
         static void LoadMaze(char[,] Maze)
         {
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\Maze.txt");
+            StreamReader fp = new StreamReader("Maze.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -595,7 +595,7 @@ namespace Task02
             char fireBuddyHead = Convert.ToChar(234);
             char fireBuddyBody = Convert.ToChar(178);
             char fireBuddyHand = Convert.ToChar(155);
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\BuddyRight.txt");
+            StreamReader fp = new StreamReader("BuddyRight.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -630,7 +630,7 @@ namespace Task02
             char fireBuddyHead = Convert.ToChar(234);
             char fireBuddyBody = Convert.ToChar(178);
             char fireBuddyHand = Convert.ToChar(155);
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\BuddyLeft.txt");
+            StreamReader fp = new StreamReader("BuddyLeft.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
@@ -662,7 +662,7 @@ namespace Task02
         }
         static void LoadEnemy(char[,] Enemy)
         {
-            StreamReader fp = new StreamReader("D:\\GitHub\\PD2\\Week02\\Task02\\Task02\\Enemy.txt");
+            StreamReader fp = new StreamReader("Enemy.txt");
             string record;
             int row = 0;
             while ((record = fp.ReadLine()) != null)
