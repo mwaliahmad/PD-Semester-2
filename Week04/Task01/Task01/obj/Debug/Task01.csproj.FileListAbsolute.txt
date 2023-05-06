@@ -1,0 +1,7 @@
+D:\GitHub\PD2\Week04\Task01\Task01\bin\Debug\Task01.exe.config
+D:\GitHub\PD2\Week04\Task01\Task01\bin\Debug\Task01.exe
+D:\GitHub\PD2\Week04\Task01\Task01\bin\Debug\Task01.pdb
+D:\GitHub\PD2\Week04\Task01\Task01\obj\Debug\Task01.csproj.AssemblyReference.cache
+D:\GitHub\PD2\Week04\Task01\Task01\obj\Debug\Task01.csproj.CoreCompileInputs.cache
+D:\GitHub\PD2\Week04\Task01\Task01\obj\Debug\Task01.exe
+D:\GitHub\PD2\Week04\Task01\Task01\obj\Debug\Task01.pdb
