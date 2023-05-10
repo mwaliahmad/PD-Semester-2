@@ -1,0 +1,10 @@
+Fasial Ilyas,19,AB+,lahore,03214265616,wali
+Rameen Ihtasham,18,A+,Lahore,03367309655,wali
+Maryam Waseem,18,O+,Lahore,03184121151,wali
+Abdul Sabur,20,O+,Lahore,03060020007,wali
+Anas Mustafa,19,A+,Fort Abbas,03157050979,wali
+Abdul Rehman,20,A+,Lahore,03124647314,wali
+Wali Ahmad,19,A+,Lahore,03370433034,wali
+Noor ul Huda,21,O-,Lahore,03134464451,wali
+Najia Sheraz,22,B+,Lahore,03237712345,wali
+Ahma,34,A-,Lahore,12345678909,waliahmad
