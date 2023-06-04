@@ -8,8 +8,9 @@ namespace Task02.BL
 {
     public class Donor
     {
-        public Donor(string nameD, string ageD, string bloodgroupD, string cityD, string contactD, string contributerD)
+        public Donor(string ID, string nameD, string ageD, string bloodgroupD, string cityD, string contactD, string contributerD)
         {
+            this.ID = ID;
             this.nameD = nameD;
             this.ageD = ageD;
             this.bloodgroupD = bloodgroupD;
@@ -17,13 +18,14 @@ namespace Task02.BL
             this.contactD = contactD;
             this.contributerD = contributerD;
         }
+        public string ID;
         public string nameD;
         public string ageD;
         public string bloodgroupD;
         public string cityD;
         public string contactD;
         public string contributerD;
-        
+
         public string GetContributer()
         {
             return contributerD;

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{69F6F0A9-543A-4159-BB5D-4DC321D58B5E}</ProjectGuid>
+    <ProjectGuid>{FDA1E56A-F21C-4ED4-8B2D-35CF4B61DBEA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Task02</RootNamespace>
-    <AssemblyName>Task02</AssemblyName>
+    <RootNamespace>Problem02</RootNamespace>
+    <AssemblyName>Problem02</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,23 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Donor.cs" />
-    <Compile Include="BL\Employee.cs" />
-    <Compile Include="BL\Login.cs" />
-    <Compile Include="BL\Recipient.cs" />
-    <Compile Include="DL\DonorCRUD.cs" />
-    <Compile Include="DL\EmployeeCRUD.cs" />
-    <Compile Include="DL\RecipientCRUD.cs" />
+    <Compile Include="BL\Card.cs" />
+    <Compile Include="BL\Deck.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Common.cs" />
-    <Compile Include="UI\AdminUI.cs" />
-    <Compile Include="UI\EmployeeUI.cs" />
-    <Compile Include="UI\LoginUI.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

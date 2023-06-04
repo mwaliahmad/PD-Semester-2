@@ -1,0 +1,7 @@
+D:\GitHub\PD2\Week06\Problem02\Problem02\bin\Debug\Problem02.exe.config
+D:\GitHub\PD2\Week06\Problem02\Problem02\bin\Debug\Problem02.exe
+D:\GitHub\PD2\Week06\Problem02\Problem02\bin\Debug\Problem02.pdb
+D:\GitHub\PD2\Week06\Problem02\Problem02\obj\Debug\Problem02.csproj.AssemblyReference.cache
+D:\GitHub\PD2\Week06\Problem02\Problem02\obj\Debug\Problem02.csproj.CoreCompileInputs.cache
+D:\GitHub\PD2\Week06\Problem02\Problem02\obj\Debug\Problem02.exe
+D:\GitHub\PD2\Week06\Problem02\Problem02\obj\Debug\Problem02.pdb

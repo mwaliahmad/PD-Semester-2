@@ -6,13 +6,12 @@ using System.Threading;
 using System.IO;
 using Task02.BL;
 using Task02.DL;
-using Task02.UL;
+using Task02.UI;
 
 namespace Task02
 {
     class Program
     {
-        static string user;
         static void Main(string[] args)
         {
 
@@ -25,17 +24,17 @@ namespace Task02
             // LoadRecipient(recipientFile, R);
             while (true)
             {
-                Input.printHeader();
-                int user = Input.login();
+                Common.printHeader();
+                int user = LoginUI.login();
                 if (user == 1)
                 {
                     // calling admin interference
-                    Input.printHeader();
+                    Common.printHeader();
                     adminMenu();
                 }
                 else if (user == 2)
                 {
-                    Input.printHeader();
+                    Common.printHeader();
                     Console.WriteLine("user");
                     Console.ReadKey();
                     // employeeMenu(donorFile, D, recipientFile, R);
@@ -56,89 +55,89 @@ namespace Task02
             int choice = 0;
             while (choice != 10)
             {
-                Input.printHeader();
-                Input.menuName("Login", "Admin Menu");
-                Input.printAMenu();                 // menu
+                Common.printHeader();
+                Common.menuName("Login", "Admin Menu");
+                AdminUI.printAMenu();                 // menu
 
-                choice = choiceCheck();
+                choice = Common.choiceCheck();
 
                 if (choice == 1)
                 {
-                    Input.printHeader();
-                    Employee E = Input.addEmployee();
+                    Common.printHeader();
+                    Employee E = AdminUI.addEmployee();
                     EmployeeCRUD.AddEmployeeToList(E);
                     EmployeeCRUD.EmployeeToFile(E);
-                    Input.Back("Employee Added Successfully...");
+                    Common.Back("Employee Added Successfully...");
                 }
                 if (choice == 2)
                 {
-                    Input.printHeader();
-                    string name = Input.SearchEmployee("Admin Menu", "Delete Employee");
+                    Common.printHeader();
+                    string name = AdminUI.SearchEmployee("Admin Menu", "Delete Employee");
                     int idx = EmployeeCRUD.SearchEmployee(name);
                     if (idx != -1)
                     {
-                        Input.Heading();
-                        Input.DisplayEmployee(EmployeeCRUD.Employees[idx]);
+                        AdminUI.EmployeeHeading();
+                        AdminUI.DisplayEmployee(EmployeeCRUD.Employees[idx]);
                         EmployeeCRUD.DeleteEmployeeToList(EmployeeCRUD.Employees[idx]);
                         EmployeeCRUD.updateEmployeeFile();
-                        Input.Back("Employee Removed...");
+                        Common.Back("Employee Removed...");
                     }
                     else
                     {
-                        Input.Back("Employee Not Found");
+                        Common.Back("Employee Not Found");
                     }
                 }
                 if (choice == 3)
                 {
-                    Input.printHeader();
-                    string name = Input.SearchEmployee("Admin Menu", "Update Employee");
+                    Common.printHeader();
+                    string name = AdminUI.SearchEmployee("Admin Menu", "Update Employee");
                     int idx = EmployeeCRUD.SearchEmployee(name);
                     if (idx != -1)
                     {
-                        Input.Heading();
-                        Input.DisplayEmployee(EmployeeCRUD.Employees[idx]);
-                        Employee update = Input.NewEmployee();
+                        AdminUI.EmployeeHeading();
+                        AdminUI.DisplayEmployee(EmployeeCRUD.Employees[idx]);
+                        Employee update = AdminUI.NewEmployee();
                         EmployeeCRUD.Employees[idx] = update;
                         EmployeeCRUD.updateEmployeeFile();
-                        Input.Back("Employee Updated...");
+                        Common.Back("Employee Updated...");
                     }
                     else
                     {
-                        Input.Back("Employee Not Found");
+                        Common.Back("Employee Not Found");
                     }
                 }
                 if (choice == 4)
                 {
-                    Input.printHeader();
-                    string name = Input.SearchEmployee("Admin Menu", "Search Employee");
+                    Common.printHeader();
+                    string name = AdminUI.SearchEmployee("Admin Menu", "Search Employee");
                     int idx = EmployeeCRUD.SearchEmployee(name);
                     if (idx != -1)
                     {
-                        Input.Heading();
-                        Input.DisplayEmployee(EmployeeCRUD.Employees[idx]);
-                        Input.Back("");
+                        AdminUI.EmployeeHeading();
+                        AdminUI.DisplayEmployee(EmployeeCRUD.Employees[idx]);
+                       Common.Back("");
                     }
                     else
                     {
-                        Input.Back("Employee Not Found");
+                        Common.Back("Employee Not Found");
                     }
                 }
                 if (choice == 5)
                 {
-                    Input.printHeader();
-                    Input.menuName("Admin Menu", "View all Employees");
-                    Input.Heading();
+                    Common.printHeader();
+                    Common.menuName("Admin Menu", "View all Employees");
+                    AdminUI.EmployeeHeading();
                     if (EmployeeCRUD.Employees.Count != 0)
                     {
                         foreach (var E in EmployeeCRUD.Employees)
                         {
-                            Input.DisplayEmployee(E);
+                            AdminUI.DisplayEmployee(E);
                         }
-                        Input.Back("");
+                        Common.Back("");
                     }
                     else
                     {
-                        Input.Back("Employees Not Found...Add First to View");
+                        Common.Back("Employees Not Found...Add First to View");
                     }
                 }
             }
@@ -532,27 +531,7 @@ namespace Task02
         {
             Console.WriteLine(R.nameR.PadRight(20) + R.ageR.PadRight(20) + R.bloodgroupR.PadRight(20) + R.cityR.PadRight(20) + R.contactR.PadRight(20));
         }*/
-        static int choiceCheck() // choice validation
-        {
-            int choice;
-            string opt;
-
-            opt = Console.ReadLine();
-            while (true)
-            {
-                if (int.TryParse(opt, out choice))
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Wrong Option...");
-                    Console.Write("Enter Option: ");
-                    opt = Console.ReadLine();
-                }
-            }
-            return choice;
-        }
+        
         static string isAlpha(string input)
         {
             input = Console.ReadLine();

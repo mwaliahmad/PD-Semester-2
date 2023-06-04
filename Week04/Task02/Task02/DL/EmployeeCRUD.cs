@@ -42,17 +42,18 @@ namespace Task02.DL
             {
                 if (line != "")
                 {
-                    string name = Dataparse(line, 1);
+                    string[] data = line.Split(',');
+                    string name = data[0];
 
-                    string age = Dataparse(line, 2);
+                    string age = data[1];
 
-                    string cnic = Dataparse(line, 3);
+                    string cnic = data[2];
 
-                    string contact = Dataparse(line, 4);
+                    string contact = data[3];
 
-                    string username = Dataparse(line, 5);
+                    string username = data[4];
 
-                    string password = Dataparse(line, 6);
+                    string password = data[5];
 
                     Employee E1 = new Employee(name, age, contact, cnic, username, password);
                     AddEmployeeToList(E1);
@@ -79,24 +80,6 @@ namespace Task02.DL
             }
             employeeData.Flush();
             employeeData.Close();
-        }
-        static string Dataparse(string line, int field)
-        {
-            int comma = 1;
-            string item = "";
-            int length = line.Length;
-            for (int i = 0; i < length; i++)
-            {
-                if (line[i] == ',')
-                {
-                    comma++;
-                }
-                else if (field == comma)
-                {
-                    item = item + line[i];
-                }
-            }
-            return item;
         }
     }
 }
