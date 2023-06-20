@@ -64,7 +64,7 @@ namespace Task02
                 if (choice == 1)
                 {
                     Common.printHeader();
-                    Employee E = AdminUI.addEmployee();
+                    Employee E = AdminUI.addEmployee("Admin Menu", "Add Employee");
                     EmployeeCRUD.AddEmployeeToList(E);
                     EmployeeCRUD.EmployeeToFile(E);
                     Common.Back("Employee Added Successfully...");

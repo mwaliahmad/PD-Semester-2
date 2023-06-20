@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BDMS.BL.Admin" Collapsed="true">
+    <Position X="4.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\Admin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.BL.Donor" Collapsed="true">
+    <Position X="4.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAgABAgAAIgAAAgAAAAAAIAAAAgAAARAAABAA=</HashCode>
+      <FileName>BL\Donor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.BL.Employee" Collapsed="true">
+    <Position X="9" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYACABAAAIBAEAgIGFAAAQQAAAAAAAAAgAAAxAgABEA=</HashCode>
+      <FileName>BL\Employee.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Person" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BDMS.BL.Guest" Collapsed="true">
+    <Position X="6.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BL\Guest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.BL.Person" Collapsed="true">
+    <Position X="5.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAAAAgABAAAAIiEAAgAQAAAAIAAAAgAAARAAABAA=</HashCode>
+      <FileName>BL\Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.BL.Recipient" Collapsed="true">
+    <Position X="6.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAgABAgAAIgAAAgAAAAAAIAAAAgAAARAAABAA=</HashCode>
+      <FileName>BL\Recipient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.BL.User" Collapsed="true">
+    <Position X="6.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>BL\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.DL.EmployeeCRUD" Collapsed="true">
+    <Position X="11.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAQAAAIAAAAAAAQACAAABAAAAAAAABAIAAI=</HashCode>
+      <FileName>DL\EmployeeCRUD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.DL.PersonCRUD" Collapsed="true">
+    <Position X="15" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAEAAAAIAAAAAgAAAYAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>DL\PersonCRUD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.AdminUI" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAAAAAAAAAAAAACAAAAAAIAAAIAAAAAFAAAAA=</HashCode>
+      <FileName>UI\AdminUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.Common" Collapsed="true">
+    <Position X="13.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAAAAAAAAAAAAAAAAAAAAAAAAIQAAAAAAAAABAAAg=</HashCode>
+      <FileName>UI\Common.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.DonorUI" Collapsed="true">
+    <Position X="15" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>UI\DonorUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.EmployeeUI" Collapsed="true">
+    <Position X="13.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\EmployeeUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.PersonUI" Collapsed="true">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAgAAAA=</HashCode>
+      <FileName>UI\PersonUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.RecipientUI" Collapsed="true">
+    <Position X="13.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAAAgAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UI\RecipientUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BDMS.UI.UserUI" Collapsed="true">
+    <Position X="15" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>UI\UserUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

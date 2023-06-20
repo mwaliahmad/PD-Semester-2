@@ -1,0 +1,10 @@
+D:\GitHub\PD2\Week09\Problem02\Problem02\bin\Debug\Problem02.exe.config
+D:\GitHub\PD2\Week09\Problem02\Problem02\bin\Debug\Problem02.exe
+D:\GitHub\PD2\Week09\Problem02\Problem02\bin\Debug\Problem02.pdb
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.csproj.AssemblyReference.cache
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.Form1.resources
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.Properties.Resources.resources
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.csproj.GenerateResource.cache
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.csproj.CoreCompileInputs.cache
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.exe
+D:\GitHub\PD2\Week09\Problem02\Problem02\obj\Debug\Problem02.pdb
